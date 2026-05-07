@@ -6,7 +6,14 @@ import {
   SheetContent,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import NewsletterSheet from "@/components/NewsletterSheet";
+
+const navItems = [
+  { number: "01", label: "Home", to: "/" },
+  { number: "02", label: "Work", to: "/#work" },
+  { number: "03", label: "About", to: "/article/about-james" },
+  { number: "04", label: "Pricing", to: "/#pricing" },
+  { number: "05", label: "Contact", to: "/contact" },
+];
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -24,24 +31,21 @@ const Header = () => {
             </Link>
 
             {/* Desktop Navigation */}
-            <nav className="hidden md:flex items-center gap-8">
-              <Link
-                to="/article/about-james"
-                className="text-[1.125rem] font-medium text-muted-foreground hover:text-foreground transition-colors"
-              >
-                About the Author
-              </Link>
-              <Link
-                to="/contact"
-                className="text-[1.125rem] font-medium text-muted-foreground hover:text-foreground transition-colors"
-              >
-                Get in touch
-              </Link>
-              <NewsletterSheet>
-                <button className="text-[1.125rem] font-medium text-muted-foreground hover:text-foreground transition-colors">
-                  Newsletter
-                </button>
-              </NewsletterSheet>
+            <nav className="hidden md:flex items-center gap-10">
+              {navItems.map((item) => (
+                <Link
+                  key={item.number}
+                  to={item.to}
+                  className="flex items-center gap-2 group"
+                >
+                  <span className="text-[0.75rem] font-medium text-muted-foreground [writing-mode:vertical-rl] rotate-180 tracking-widest">
+                    {item.number}
+                  </span>
+                  <span className="text-[0.875rem] font-semibold uppercase tracking-[0.15em] text-foreground underline underline-offset-[6px] decoration-1 group-hover:text-primary transition-colors">
+                    {item.label}
+                  </span>
+                </Link>
+              ))}
             </nav>
 
             {/* Mobile Menu */}
@@ -55,36 +59,22 @@ const Header = () => {
                 </button>
               </SheetTrigger>
               <SheetContent side="right" className="w-[300px] sm:w-[400px]">
-                <nav className="flex flex-col gap-6 mt-8">
-                  <Link
-                    to="/"
-                    onClick={() => setIsOpen(false)}
-                    className="text-[1.8rem] font-medium text-foreground hover:text-primary transition-colors"
-                  >
-                    Home
-                  </Link>
-                  <Link
-                    to="/article/about-james"
-                    onClick={() => setIsOpen(false)}
-                    className="text-[1.8rem] font-medium text-foreground hover:text-primary transition-colors"
-                  >
-                    About the Author
-                  </Link>
-                  <Link
-                    to="/contact"
-                    onClick={() => setIsOpen(false)}
-                    className="text-[1.8rem] font-medium text-foreground hover:text-primary transition-colors"
-                  >
-                    Get in touch
-                  </Link>
-                  <NewsletterSheet>
-                    <button
+                <nav className="flex flex-col gap-6 mt-12">
+                  {navItems.map((item) => (
+                    <Link
+                      key={item.number}
+                      to={item.to}
                       onClick={() => setIsOpen(false)}
-                      className="text-[1.8rem] font-medium text-foreground hover:text-primary transition-colors text-left"
+                      className="flex items-baseline gap-3"
                     >
-                      Newsletter
-                    </button>
-                  </NewsletterSheet>
+                      <span className="text-[0.875rem] font-medium text-muted-foreground tracking-widest">
+                        {item.number}
+                      </span>
+                      <span className="text-[1.5rem] font-semibold uppercase tracking-[0.15em] text-foreground underline underline-offset-[6px] decoration-1 hover:text-primary transition-colors">
+                        {item.label}
+                      </span>
+                    </Link>
+                  ))}
                 </nav>
               </SheetContent>
             </Sheet>
