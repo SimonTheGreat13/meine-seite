@@ -23,15 +23,6 @@ export default function ArticlePreview({
 }: ArticlePreviewProps) {
   return (
     <article className={`relative flex flex-col ${className}`}>
-      <figure className="relative order-[-1] mb-[1.25rem] pb-[100%] overflow-hidden bg-muted group/image">
-        <Link to={`/article/${slug}`} title={imageAlt}>
-          <img
-            alt={imageAlt}
-            src={image}
-            className="absolute w-full h-full object-cover transition-transform duration-500 ease-out group-hover/image:scale-105"
-          />
-        </Link>
-      </figure>
 
       <div className="flex items-center gap-3 order-[-1] mb-[0.5rem]">
         {category && (
