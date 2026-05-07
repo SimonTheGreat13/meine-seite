@@ -20,7 +20,7 @@ const Header = () => {
               to="/"
               className="text-2xl font-bold text-foreground"
             >
-              Voyager
+              Andom Web Studio
             </Link>
 
             {/* Desktop Navigation */}

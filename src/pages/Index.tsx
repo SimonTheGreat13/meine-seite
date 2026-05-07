@@ -51,8 +51,8 @@ const Index = () => {
         <GridWrapper>
           <GridContent className="!mt-0 !mb-0">
             <BlogHero
-              title="Voyager"
-              description="Voyager Press is a modern travel and lifestyle newsroom that showcases inspiring stories, destination features, and travel industry updates."
+              title="Andom Web Studio"
+              description="Andom Web Studio ist ein modernes Web Studio, das inspirierende Geschichten, Projekte und Einblicke aus der Welt des Webdesigns und der Entwicklung präsentiert."
             />
           </GridContent>
         </GridWrapper>
@@ -92,7 +92,7 @@ const Index = () => {
       <footer className="border-t border-border mt-24">
         <div className="article-grid py-12">
           <div className="article-hero text-center text-sm text-muted-foreground">
-            <p>© 2024 Voyager Press. All rights reserved.</p>
+            <p>© 2024 Andom Web Studio. Alle Rechte vorbehalten.</p>
           </div>
         </div>
       </footer>
