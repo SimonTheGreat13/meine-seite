@@ -10,11 +10,7 @@ const BlogHero = ({ title, description }: BlogHeroProps) => {
     <div className="article-full-width text-center flex flex-col items-center">
       {/* Title - Full Width */}
       <h1 className="fluid-title mb-12">
-        {title.split(" ").map((word, index) => (
-          <span key={index} className="block">
-            {word}
-          </span>
-        ))}
+        {title}
       </h1>
 
       <p className="text-muted-foreground text-[1.125rem] md:text-[1.5rem] leading-relaxed max-w-[60ch]">
