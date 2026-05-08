@@ -1,98 +1,58 @@
-import { useEffect, useRef, useMemo } from "react";
+import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import Section from "@/components/Section";
-import ArticlePreview from "@/components/ArticlePreview";
-import BlogHero from "@/components/BlogHero";
-import {
-  GridContainer,
-  GridContent,
-  GridWrapper,
-} from "@/components/GridContainer";
-import { articlesData } from "@/data/articles";
+import RotatingWord from "@/components/RotatingWord";
+import { GridContent, GridWrapper } from "@/components/GridContainer";
 
 const Index = () => {
-  const articlesRef = useRef<(HTMLElement | null)[]>([]);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("animate-fadeInUp");
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-
-    articlesRef.current.forEach((article) => {
-      if (article) observer.observe(article);
-    });
-
-    return () => observer.disconnect();
-  }, []);
-
-  // Transform articlesData into the format needed for the article grid
-  const allArticles = useMemo(() => {
-    return Object.values(articlesData).map((article) => ({
-      title: article.title,
-      image: article.heroImage,
-      publishDate: article.publishDate,
-      slug: article.slug,
-    }));
-  }, []);
-
   return (
-    <div className="min-h-screen bg-background relative">
+    <div className="min-h-screen flex flex-col bg-background relative">
       <Header />
 
-      <Section>
-        <GridWrapper>
-          <GridContent className="!mt-0 !mb-0">
-            <BlogHero
-              title="Andom Web Studio"
-              description="Andom Web Studio ist ein modernes Web Studio, das inspirierende Geschichten, Projekte und Einblicke aus der Welt des Webdesigns und der Entwicklung präsentiert."
-            />
-          </GridContent>
-        </GridWrapper>
-      </Section>
+      <main className="flex-1 flex items-center">
+        <Section>
+          <GridWrapper>
+            <GridContent className="!mt-0 !mb-0">
+              <div className="article-full-width text-center flex flex-col items-center py-24 md:py-32">
+                <p className="text-[0.75rem] md:text-[0.875rem] uppercase tracking-[0.3em] text-muted-foreground mb-8">
+                  Andom Web Studio
+                </p>
 
-      {/* Articles Section - Accordion Grid */}
-      <Section>
-        <GridWrapper>
-          <GridContent>
-            <div className="article-full-width">
-              <ul className="article-two-columns">
-                {allArticles.map((article, index) => (
-                  <li
-                    key={index}
-                    ref={(el) => (articlesRef.current[index] = el)}
-                    className="blog-feed__item"
-                    style={{
-                      animationDelay: `${(index % 2) * 150}ms`,
-                    }}
-                  >
-                    <ArticlePreview
-                      title={article.title}
-                      slug={article.slug}
-                      image={article.image}
-                      imageAlt={article.title}
-                      publishDate={article.publishDate}
-                    />
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </GridContent>
-        </GridWrapper>
-      </Section>
+                <h1 className="fluid-title mb-10">
+                  Wir bauen
+                  <br />
+                  <RotatingWord
+                    words={[
+                      "Webseiten.",
+                      "Marken.",
+                      "Erlebnisse.",
+                      "Ideen.",
+                      "Zukunft.",
+                    ]}
+                    className="text-primary"
+                  />
+                </h1>
 
-      {/* Footer */}
-      <footer className="border-t border-border mt-24">
-        <div className="article-grid py-12">
-          <div className="article-hero text-center text-sm text-muted-foreground">
-            <p>© 2024 Andom Web Studio. Alle Rechte vorbehalten.</p>
+                <p className="text-muted-foreground text-[1.125rem] md:text-[1.5rem] leading-relaxed max-w-[55ch] mb-12">
+                  Minimal. Schnell. Auf den Punkt.
+                </p>
+
+                <Link
+                  to="/kontakt"
+                  className="px-10 py-4 text-sm md:text-base uppercase tracking-[0.2em] font-semibold bg-foreground text-background hover:bg-primary transition-colors duration-300 rounded-full"
+                >
+                  Projekt starten
+                </Link>
+              </div>
+            </GridContent>
+          </GridWrapper>
+        </Section>
+      </main>
+
+      <footer className="border-t border-border">
+        <div className="article-grid py-10">
+          <div className="article-hero text-center text-xs md:text-sm text-muted-foreground">
+            <p>© {new Date().getFullYear()} Andom Web Studio. Alle Rechte vorbehalten.</p>
           </div>
         </div>
       </footer>
