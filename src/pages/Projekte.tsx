@@ -7,27 +7,30 @@ import { GridContent, GridWrapper } from "@/components/GridContainer";
 const projects = [
   {
     number: "01",
-    title: "Lumen Studio",
-    category: "Branding & Webdesign",
+    title: "www.hvschwaben.de",
+    category: "Hausverwaltung",
     year: "2025",
     description:
-      "Kompletter Markenauftritt und Website für ein Architekturstudio in Zürich.",
+      "Webauftritt für eine Hausverwaltung — klar strukturiert, vertrauensvoll und auf die Bedürfnisse von Eigentümern und Mietern ausgerichtet.",
+    url: "https://www.hvschwaben.de",
   },
   {
     number: "02",
-    title: "Nord & Co.",
-    category: "E-Commerce",
+    title: "www.sefer-clean.de",
+    category: "Facility Management",
     year: "2025",
     description:
-      "Premium Shop-Erlebnis für eine skandinavische Lifestyle-Marke — von Konzept bis Launch.",
+      "Moderne Unternehmensseite für einen Facility-Management-Dienstleister — mit Fokus auf Leistungen, Referenzen und schnelle Kontaktaufnahme.",
+    url: "https://www.sefer-clean.de",
   },
   {
     number: "03",
-    title: "Atelier Mira",
-    category: "Webentwicklung",
-    year: "2024",
+    title: "www.danis-atelier.de",
+    category: "Kunst & Portfolio",
+    year: "2025",
     description:
-      "Portfolio-Website mit individuellen Animationen für eine internationale Künstlerin.",
+      "Portfolio-Website für eine Künstlerin — eine ruhige Bühne für Werke, Ausstellungen und persönliche Geschichten.",
+    url: "https://www.danis-atelier.de",
   },
 ];
 
