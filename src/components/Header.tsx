@@ -4,8 +4,7 @@ const navItems = [
   { number: "01", label: "Start", to: "/" },
   { number: "02", label: "Leistungen", to: "/leistungen" },
   { number: "03", label: "Projekte", to: "/projekte" },
-  { number: "04", label: "Preise", to: "/preise" },
-  { number: "05", label: "Kontakt", to: "/kontakt" },
+  { number: "04", label: "Kontakt", to: "/kontakt" },
 ];
 
 const Header = () => {

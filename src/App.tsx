@@ -7,7 +7,6 @@ import ScrollToTop from "@/components/ScrollToTop";
 import Index from "./pages/Index";
 import Leistungen from "./pages/Leistungen";
 import Projekte from "./pages/Projekte";
-import Preise from "./pages/Preise";
 import Kontakt from "./pages/Kontakt";
 import Article from "./pages/Article";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
@@ -26,7 +25,6 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/leistungen" element={<Leistungen />} />
           <Route path="/projekte" element={<Projekte />} />
-          <Route path="/preise" element={<Preise />} />
           <Route path="/kontakt" element={<Kontakt />} />
           <Route path="/article/:slug" element={<Article />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
