@@ -3,13 +3,28 @@ import Header from "@/components/Header";
 import Section from "@/components/Section";
 import RotatingWord from "@/components/RotatingWord";
 import { GridContent, GridWrapper } from "@/components/GridContainer";
+import heroHead from "@/assets/hero-head.jpg";
 
 const Index = () => {
   return (
-    <div className="min-h-screen flex flex-col bg-background relative">
+    <div className="min-h-screen flex flex-col bg-background relative overflow-hidden">
       <Header />
 
-      <main className="flex-1 flex items-center">
+      {/* Floating head — half off the right edge, gentle sway */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute top-1/2 -translate-y-1/2 right-0 translate-x-1/2 md:translate-x-1/2 z-0 animate-head-float-in"
+      >
+        <div className="animate-head-sway origin-center will-change-transform">
+          <img
+            src={heroHead}
+            alt=""
+            className="w-[60vw] max-w-[640px] min-w-[320px] h-auto select-none opacity-90 mix-blend-screen drop-shadow-[0_30px_80px_rgba(120,80,255,0.25)]"
+          />
+        </div>
+      </div>
+
+      <main className="flex-1 flex items-center relative z-10">
         <Section>
           <GridWrapper>
             <GridContent className="!mt-0 !mb-0">
