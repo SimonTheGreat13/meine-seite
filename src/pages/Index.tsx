@@ -1,25 +1,48 @@
 import { Link } from "react-router-dom";
+import { useEffect, useRef } from "react";
 import Header from "@/components/Header";
 import Section from "@/components/Section";
 import RotatingWord from "@/components/RotatingWord";
 import { GridContent, GridWrapper } from "@/components/GridContainer";
-import heroHead from "@/assets/hero-head.jpg";
+import heroHead from "@/assets/hero-head.png";
 
 const Index = () => {
+  const headRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const onMove = (e: MouseEvent) => {
+      const el = headRef.current;
+      if (!el) return;
+      const rect = el.getBoundingClientRect();
+      const cx = rect.left + rect.width / 2;
+      const cy = rect.top + rect.height / 2;
+      const dx = e.clientX - cx;
+      const dy = e.clientY - cy;
+      const rotY = Math.max(-22, Math.min(22, dx / 25));
+      const rotX = Math.max(-12, Math.min(12, -dy / 40));
+      el.style.transform = `perspective(900px) rotateY(${rotY}deg) rotateX(${rotX}deg)`;
+    };
+    window.addEventListener("mousemove", onMove);
+    return () => window.removeEventListener("mousemove", onMove);
+  }, []);
+
   return (
     <div className="min-h-screen flex flex-col bg-background relative overflow-hidden">
       <Header />
 
-      {/* Floating head — half off the right edge, gentle sway */}
+      {/* Floating head — center-right, half off the edge, follows the cursor */}
       <div
         aria-hidden
-        className="pointer-events-none absolute top-1/2 -translate-y-1/2 right-0 translate-x-1/2 md:translate-x-1/2 z-0 animate-head-float-in"
+        className="pointer-events-none absolute top-1/2 -translate-y-1/2 right-0 translate-x-[30%] md:translate-x-[35%] z-0 animate-head-float-in"
       >
-        <div className="animate-head-sway origin-center will-change-transform">
+        <div
+          ref={headRef}
+          className="will-change-transform transition-transform duration-300 ease-out"
+        >
           <img
             src={heroHead}
             alt=""
-            className="w-[60vw] max-w-[640px] min-w-[320px] h-auto select-none opacity-90 mix-blend-screen drop-shadow-[0_30px_80px_rgba(120,80,255,0.25)]"
+            className="w-[55vw] max-w-[620px] min-w-[300px] h-auto select-none drop-shadow-[0_30px_80px_rgba(120,80,255,0.35)]"
           />
         </div>
       </div>
