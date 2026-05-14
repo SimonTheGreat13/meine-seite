@@ -10,20 +10,64 @@ const Index = () => {
   const headRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const onMove = (e: MouseEvent) => {
-      const el = headRef.current;
-      if (!el) return;
+    const el = headRef.current;
+    if (!el) return;
+
+    const MAX_Y = 18;
+    const MAX_X = 10;
+    const LERP = 0.08;
+    const isCoarse = window.matchMedia("(pointer: coarse)").matches;
+
+    let targetX = 0;
+    let targetY = 0;
+    let currentX = 0;
+    let currentY = 0;
+    let raf = 0;
+    let idleT = 0;
+    let lastInteraction = performance.now();
+
+    const clamp = (v: number, m: number) => Math.max(-m, Math.min(m, v));
+
+    const setTargetFromPoint = (x: number, y: number) => {
       const rect = el.getBoundingClientRect();
       const cx = rect.left + rect.width / 2;
       const cy = rect.top + rect.height / 2;
-      const dx = e.clientX - cx;
-      const dy = e.clientY - cy;
-      const rotY = Math.max(-22, Math.min(22, dx / 25));
-      const rotX = Math.max(-12, Math.min(12, -dy / 40));
-      el.style.transform = `perspective(900px) rotateY(${rotY}deg) rotateX(${rotX}deg)`;
+      const nx = (x - cx) / (window.innerWidth / 2);
+      const ny = (y - cy) / (window.innerHeight / 2);
+      targetY = clamp(nx * MAX_Y, MAX_Y);
+      targetX = clamp(-ny * MAX_X, MAX_X);
+      lastInteraction = performance.now();
     };
-    window.addEventListener("mousemove", onMove);
-    return () => window.removeEventListener("mousemove", onMove);
+
+    const onMove = (e: MouseEvent) => setTargetFromPoint(e.clientX, e.clientY);
+    const onTouch = (e: TouchEvent) => {
+      const t = e.touches[0];
+      if (t) setTargetFromPoint(t.clientX, t.clientY);
+    };
+
+    const tick = () => {
+      const now = performance.now();
+      const idle = isCoarse || now - lastInteraction > 1800;
+      if (idle) {
+        idleT += 0.012;
+        targetY = Math.sin(idleT) * 8;
+        targetX = Math.sin(idleT * 0.7) * 4;
+      }
+      currentX += (targetX - currentX) * LERP;
+      currentY += (targetY - currentY) * LERP;
+      el.style.transform = `perspective(900px) rotateY(${currentY.toFixed(2)}deg) rotateX(${currentX.toFixed(2)}deg)`;
+      raf = requestAnimationFrame(tick);
+    };
+
+    if (!isCoarse) window.addEventListener("mousemove", onMove, { passive: true });
+    window.addEventListener("touchmove", onTouch, { passive: true });
+    raf = requestAnimationFrame(tick);
+
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("mousemove", onMove);
+      window.removeEventListener("touchmove", onTouch);
+    };
   }, []);
 
   return (
@@ -35,13 +79,11 @@ const Index = () => {
         aria-hidden
         className="pointer-events-none absolute top-1/2 -translate-y-1/2 right-0 translate-x-[30%] md:translate-x-[35%] z-0 animate-head-float-in"
       >
-        <div
-          ref={headRef}
-          className="will-change-transform transition-transform duration-300 ease-out"
-        >
+        <div ref={headRef} className="will-change-transform">
           <img
             src={heroHead}
             alt=""
+            draggable={false}
             className="w-[55vw] max-w-[620px] min-w-[300px] h-auto select-none drop-shadow-[0_30px_80px_rgba(120,80,255,0.35)]"
           />
         </div>
